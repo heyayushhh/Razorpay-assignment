@@ -97,3 +97,22 @@ Critical: All protected routes MUST use auth middleware FIRST, then roleCheck mi
 Generate code + test curl commands for each role's visibility.
 
 === END BRICK 3 ===
+
+==== BRICK 4: Reimbursement Creation & Dual-Approval Logic =====
+
+Implement reimbursement endpoints with dual-approval workflow.
+Schema Reminder: reimbursements has rm_approved_at, ape_approved_at, status (PENDING/APPROVED/REJECTED).
+Requirements:
+1. POST /rest/reimbursements: EMP only. Body: {title, description, amount}. Validate amount > 0. Insert with status='PENDING'. Return created reimbursement.
+2. PATCH /rest/reimbursements: RM/APE/CFO only. Body: {userId, status} where userId is the reimbursement ID (note: PDF says userId but logically it's reimbursementId - handle both).
+APPROVAL STATE MACHINE:
+    -  If RM approves: Set rm_approved_at=NOW(), rm_approved_by=req.user.id. Keep status='PENDING' UNLESS ape_approved_at already exists → then set status='APPROVED'.
+    -  If APE approves: Check rm_approved_at IS NOT NULL. If yes → set ape_approved_at=NOW(), ape_approved_by=req.user.id, status='APPROVED'. If no → return 422 "RM must approve first".
+    -  If anyone rejects: Set rejected_at=NOW(), rejected_by=req.user.id, rejection_reason (if provided), status='REJECTED'. Override any prior approvals.
+    -  If CFO approves: Set BOTH rm_approved_at AND ape_approved_at, status='APPROVED'.
+3. Log EVERY approval/rejection to approval_audit_log table with actor_role, action, from_status, to_status.
+Generate code + comprehensive test scenarios covering all state transitions.
+
+=== END BRICK 4 ===
+
+

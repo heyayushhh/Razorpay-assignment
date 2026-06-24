@@ -38,9 +38,9 @@ CREATE TABLE reimbursements (
     amount DECIMAL(12, 2) NOT NULL,
     status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
     rm_approved_at TIMESTAMP,
-    apc_approved_at TIMESTAMP,
+    ape_approved_at TIMESTAMP,
     rm_approved_by INTEGER,
-    apc_approved_by INTEGER,
+    ape_approved_by INTEGER,
     rejected_at TIMESTAMP,
     rejected_by INTEGER,
     rejection_reason TEXT,
@@ -49,7 +49,7 @@ CREATE TABLE reimbursements (
     CHECK (status IN ('PENDING', 'APPROVED', 'REJECTED')),
     FOREIGN KEY (employee_id) REFERENCES users(id),
     FOREIGN KEY (rm_approved_by) REFERENCES users(id),
-    FOREIGN KEY (apc_approved_by) REFERENCES users(id),
+    FOREIGN KEY (ape_approved_by) REFERENCES users(id),
     FOREIGN KEY (rejected_by) REFERENCES users(id)
 );
 

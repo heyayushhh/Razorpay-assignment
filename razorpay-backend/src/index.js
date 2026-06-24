@@ -6,6 +6,7 @@ const authMiddleware = require('./middleware/auth');
 const onboardingRouter = require('./routes/onboarding');
 const employeesRouter = require('./routes/employees');
 const rolesRouter = require('./routes/roles');
+const reimbursementsRouter = require('./routes/reimbursements');
 
 const app = express();
 const PORT = process.env.PORT || 7002;
@@ -16,6 +17,7 @@ app.use(cookieParser());
 app.use('/rest/onboardings', onboardingRouter);
 app.use('/rest/employees', employeesRouter);
 app.use('/rest/roles', rolesRouter);
+app.use('/rest/reimbursements', reimbursementsRouter);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Server is running!' });
