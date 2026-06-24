@@ -1,0 +1,54 @@
+=== BRICK 1: Project Setup & DB Schema ===
+
+ am building a backend for a Razorpay hiring assignment in strict JavaScript (no TypeScript).
+Context:
+
+. Framework: Express.js
+· Database: PostgreSQL (using
+. Auth: Cookie-based JWT
+. Port: MUST be 7002
+
+. I have a
+
+Task:
+
+1. Generate package. json with EXACTLY these scripts:
+"dev": "node src/index.js"
+
+"db:migrate": "node src/db/migrate.js"
+
+"db: seed-data": "node src/db/seed. js"
+
+2. Create src/config/db. js that creates a pg.Pool using process.env.DATABASE_URL . Export the pool.
+3. Create src/index. js that initializes Express, uses express. json() and
+listens on process.env.PORT | | 7002
+4. Create src/db/migrate. js that reads
+
+gracefully.
+5. Create src/db/schema.sq1 based on my attached schema diagram. Include tables: users
+approval_audit_log, sessions. Add all CHECK constraints
+
+pg
+
+library, raw SQL preferred over ORM for speed)
+
+.env file with DATABASE_URL
+
+JWT_SECRET, and PORT.
+
+cookie-parser(), connects to DB, and
+
+src/db/schema.sq1 and executes it against the pool. Handle errors
+
+reporting_assignments, reimbursements,
+mentioned in the diagram legend.
+6. Create src/db/seed. js that inserts ONLY the CFO account: email= cfo@org.com, password=
+CFO#ORG@Apri12026 (bcrypt hash), role= CFO. Do NOT seed anything else.
+Constraints:
+. NO TypeScript files.
+· Use async/await everywhere.
+. Log success/failure of migrate and seed scripts clearly.
+. After generating, tell me the exact commands to test migration and seeding.
+
+=== END BRICK 1 ===
+
