@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 7002;
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/rest', onboardingRouter);
+app.use('/rest/onboardings', onboardingRouter);
 app.use('/rest/employees', employeesRouter);
 app.use('/rest/roles', rolesRouter);
 

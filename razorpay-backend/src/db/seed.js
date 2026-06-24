@@ -5,7 +5,7 @@ const pool = require('../config/db');
 async function seed() {
   try {
     const email = 'cfo@org.com';
-    const password = 'CFO#ORG@Apri12026';
+    const password = 'CFO#ORG@April2026';
     const role = 'CFO';
     
     const passwordHash = await bcrypt.hash(password, 10);
