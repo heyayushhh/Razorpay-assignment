@@ -2,12 +2,15 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const pool = require('./config/db');
+const onboardingRouter = require('./routes/onboarding');
 
 const app = express();
 const PORT = process.env.PORT || 7002;
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use('/rest', onboardingRouter);
 
 app.get('/', (req, res) => {
   res.json({ message: 'Server is running!' });

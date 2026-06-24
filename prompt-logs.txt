@@ -52,3 +52,27 @@ Constraints:
 
 === END BRICK 1 ===
 
+======== BRICK 2 : Authentication Middleware & Onboarding Routes =========
+
+Continuing from previous context. Now implement public onboarding endpoints.
+Requirements:
+1. Create src/middleware/auth.js
+o Extract auth_token from cookies
+o Verify JWT using process. env. JWT_SECRET
+o Attach decoded user {id, email, role} to req.user
+o Return 401 if missing/invalid/expired
+
+2. Create src/routes/onboarding.js with /rest prefix:
+- POST /register: Validate email ends with @org.com. Hash password (bcrypt, 10 rounds). Insert user with role='EMP'. Return {status:"success", data:{userId, name, email, role}}.
+- POST /login: Validate @org.com. Compare password. Generate JWT (expires 7d). Set cookie: {httpOnly:true, sameSite:'strict', maxAge:7*24*60*60*1000}. Return user data WITHOUT password.
+- POST /logout: Clear auth_token cookie. Return success.
+
+3. Register routes in src/index.js.
+Edge Cases to Handle:
+- Duplicate email registration → 409 Conflict
+- Invalid email domain → 400 Bad Request
+- Wrong password → 401 Unauthorized (generic message)
+- Missing fields → 400 Validation Error
+Generate the code. Then provide curl commands to test register, login, and logout flows.
+
+=== END BRICK 2 ===
