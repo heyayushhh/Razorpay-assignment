@@ -76,3 +76,24 @@ Edge Cases to Handle:
 Generate the code. Then provide curl commands to test register, login, and logout flows.
 
 === END BRICK 2 ===
+
+======= BRICK 3 : Role-Based Access Control Middleware & Employee Management ======
+
+Now implement protected RBAC endpoints.
+Requirements:
+1. Create src/middleware/roleCheck.js: Factory function requireRole(...roles) that returns middleware checking req.user.role.
+2. Create src/routes/employees.js and controller:
+   - GET /rest/employees:
+    - EMP → 403 Forbidden
+    - RM → SELECT users WHERE id IN (SELECT employee_id FROM reporting_assignments WHERE rm_id = req.user.id) AND role='EMP'
+    - APE → SELECT users WHERE role IN ('EMP','RM')
+    - CFO → SELECT all users
+    - Response: {status:"success", data:{users:[{userId,name,email,role}]}}
+- POST /rest/employees/assign: CFO only. Body: {userId(emp), userId(rm)}. Insert into reporting_assignments. Validate both users exist and have correct roles.
+- DELETE /rest/employees/assign: CFO only. Body: {userId(emp), userId(rm)}. Delete matching row.
+3. Create src/routes/roles.js:
+    - POST /rest/roles/assign: CFO only. Body: {userId, role}. Update user role. Validate role is one of ['EMP','RM','APE','CFO'].
+Critical: All protected routes MUST use auth middleware FIRST, then roleCheck middleware.
+Generate code + test curl commands for each role's visibility.
+
+=== END BRICK 3 ===

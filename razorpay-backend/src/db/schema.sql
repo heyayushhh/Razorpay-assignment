@@ -15,7 +15,7 @@ CREATE TABLE users (
     role VARCHAR(20) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CHECK (role IN ('EMP', 'RM', 'APC', 'CFO'))
+    CHECK (role IN ('EMP', 'RM', 'APE', 'CFO'))
 );
 
 -- Create reporting_assignments table
